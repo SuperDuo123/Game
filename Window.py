@@ -26,8 +26,6 @@ class Window():
                     run = False
 
 
-app = Window(400, 400, 0)
-
 
 
 
