@@ -1,9 +1,9 @@
 from Window import Window
-
+from settings import *
 # launch program from this file
 
 def main():
-    app = Window(400,400,0)
+    app = Window(window_width,window_height,0)
 
 
 
