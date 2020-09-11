@@ -1,5 +1,6 @@
 import pygame
 from settings import *
+from Window import *
 from pygame import surface, display, rect
 
 class Menu():
@@ -20,6 +21,7 @@ class Menu():
     def load_images(self):
         #do zmiany. Sprobuj uzyc generatorow yield etc. Plus później automatyczne dopasowanie do rozdzielczosci
         self.menu_image = pygame.image.load("Menu/temp_menu.png").convert_alpha()
+        self.menu_image = pygame.transform.scale(self.menu_image,(window_width, window_height))
         #load functional buttons and get rect size from them
         self.sound_image = pygame.image.load("Menu/dzwiek.png").convert_alpha()
         self.sound_image_rect = self.sound_image.get_rect()
@@ -29,8 +31,13 @@ class Menu():
         #load button images and get rect size from them
         self.start_image = pygame.image.load("Menu/start.png").convert_alpha()
         self.start_image_rect = self.start_image.get_rect()
+        self.start_image = pygame.transform.scale(self.start_image, (int(self.start_image_rect.width * scaling_width), int(self.start_image_rect.height * scaling_height)))
+        self.start_image_rect = self.start_image.get_rect()
         self.buttons[self.start_image] = self.start_image_rect
+
         self.exit_image = pygame.image.load("Menu/exit.png").convert_alpha()
+        self.exit_image_rect = self.exit_image.get_rect()
+        self.exit_image = pygame.transform.scale(self.exit_image, (int(self.exit_image_rect.width * scaling_width), int(self.exit_image_rect.height * scaling_height)))
         self.exit_image_rect = self.exit_image.get_rect()
         self.buttons[self.exit_image] = self.exit_image_rect
 
