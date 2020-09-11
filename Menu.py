@@ -8,7 +8,7 @@ class Menu():
         self.buttons = {}
 
         self.background_surface = pygame.Surface((window_width, window_height))
-        self.buttons_surface = pygame.Surface((window_width, window_height))
+        self.buttons_surface = pygame.Surface((window_width, window_height), pygame.SRCALPHA, 32)
 
 
 
@@ -35,11 +35,18 @@ class Menu():
         self.buttons[self.exit_image] = self.exit_image_rect
 
     def render_background(self):
-
         self.background_surface.blit(self.menu_image,(0,0))
 
+
+    '''method renders buttons from dictionary self.buttons in which there are information about rect from image and image coordinates.'''
     def render_buttons(self):
-        pass
+        height = self.start_image_rect.height
+        width = self.start_image_rect.width
+
+        for key in self.buttons:
+            self.buttons_surface.blit(key, (window_width/2 - width/2 , height))
+            self.buttons[key].move(window_width/2 - width/2, height)
+            height += self.buttons[key].height + window_height / 10
 
 
 
