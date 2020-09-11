@@ -5,8 +5,10 @@ from pygame import surface, display, rect
 class Menu():
 
     def __init__(self):
-        self.background_surface = pygame.surface.Surface((window_width, window_height))
-        self.buttons_surface = pygame.surface.Surface((window_width, window_height))
+        self.background_surface = pygame.Surface((window_width, window_height))
+        self.buttons_surface = pygame.Surface((window_width, window_height))
+
+
 
     def check_surfaces(self):
         print(self.background_surface)
@@ -21,6 +23,8 @@ class Menu():
         self.start_image = pygame.image.load("Menu/start.png").convert_alpha()
         self.exit_image = pygame.image.load("Menu/exit.png").convert_alpha()
 
-#menu = Menu()
+    def render_background(self):
+
+        self.background_surface.blit(self.menu_image,(0,0))
 
 

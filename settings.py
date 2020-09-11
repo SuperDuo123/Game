@@ -1,2 +1,2 @@
-window_height = 400
-window_width = 400
+window_height = 720
+window_width = 1280
