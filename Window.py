@@ -13,14 +13,18 @@ class Window():
         self.window_height = window_height
         self.fullscreen = fullscreen
         self.window_init()
+        # load menu images and render menu background
+        self.load_menu()
+        # mainloop
+        self.mainloop()
 
+    def load_menu(self):
         #load menu images and render menu background
         self.menu.load_images()
         self.menu.render_background()
         self.menu.render_buttons()
 
-        #mainloop
-        self.mainloop()
+
         
         
 
@@ -33,6 +37,7 @@ class Window():
             self.screen = pygame.display.set_mode((self.window_width, self.window_height))
 
     def mainloop(self):
+
         run = True
         while run:
             #menu background blitting
