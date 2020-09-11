@@ -17,11 +17,10 @@ class Window():
         #load menu images and render menu background
         self.menu.load_images()
         self.menu.render_background()
+        self.menu.render_buttons()
 
+        #mainloop
         self.mainloop()
-
-        #self.menu.render_background()
-
         
         
 
@@ -37,8 +36,8 @@ class Window():
         run = True
         while run:
             #menu background blitting
-            self.screen.blit(self.menu.background_surface,(0,0))
-
+            self.screen.blit(self.menu.background_surface, (0, 0))
+            self.screen.blit(self.menu.buttons_surface, (0, 0))
             #event loop
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
