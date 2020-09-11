@@ -29,10 +29,10 @@ class Menu():
         #load button images and get rect size from them
         self.start_image = pygame.image.load("Menu/start.png").convert_alpha()
         self.start_image_rect = self.start_image.get_rect()
-        self.buttons[self.start_image:self.start_image_rect]
+        self.buttons[self.start_image] = self.start_image_rect
         self.exit_image = pygame.image.load("Menu/exit.png").convert_alpha()
         self.exit_image_rect = self.exit_image.get_rect()
-        self.buttons[self.exit_image:self.exit_image_rect]
+        self.buttons[self.exit_image] = self.exit_image_rect
 
     def render_background(self):
 
