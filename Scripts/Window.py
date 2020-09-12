@@ -1,5 +1,5 @@
 import pygame
-from Scripts.Menu import Menu
+from Menu import Menu
 
 
 class Window():
@@ -47,8 +47,11 @@ class Window():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
-                #if event.type == pygame.MOUSEBUTTONUP:
-                #    print(pygame.mouse.get_pos())
+                if event.type == pygame.MOUSEBUTTONUP:
+                    """Left Mouse Button is associated with id. 1 of event.button. It's in-built function of pygame."""
+                    if event.button == 1:
+                        self.menu.button_event_listener(pygame.mouse.get_pos())
+                        print(pygame.mouse.get_pos())
 
             pygame.display.update()
 
