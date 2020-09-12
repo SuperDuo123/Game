@@ -49,9 +49,21 @@ class Window():
                     run = False
                 if event.type == pygame.MOUSEBUTTONUP:
                     """Left Mouse Button is associated with id. 1 of event.button. It's in-built function of pygame."""
-                    if event.button == 1:
+                    if event.button == 1: #Left Mouse Button Click
                         self.menu.button_event_listener(pygame.mouse.get_pos())
                         print(pygame.mouse.get_pos())
+
+                    if event.button == 2: #Middle Mouse Button Click
+                        pass
+
+                    if event.button == 3: #Right Mouse Button Click
+                        pass
+                    if event.button == 4: #Scroll Up
+                        pass
+                    if event.button == 5: #Scroll Down
+                        pass
+
+
 
             pygame.display.update()
 
