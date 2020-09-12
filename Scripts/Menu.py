@@ -1,16 +1,20 @@
 import pygame
 from settings import *
-from Window import *
-from pygame import surface, display, rect
+#from Window import *
+import os
+
 
 class Menu():
 
-    def __init__(self):
+    def __init__(self, window):
+        self.window = window #assigns window class attributes
         """Nested dictionary. Number 0 of dict equals to start button. Number 1 of dict equals to exit button."""
+
         self.buttons = {0:{},
                         1:{}}
         self.background_surface = pygame.Surface((window_width, window_height))
         self.buttons_surface = pygame.Surface((window_width, window_height), pygame.SRCALPHA, 32)
+        self.clicked_button = None
 
 
     #check function. Debug
@@ -20,20 +24,25 @@ class Menu():
 
 
     def load_images(self):
+        #print(os.path.("temp_menu.png")
+        game_dir = os.path.dirname(os.getcwd())
+        graphics_dir = r"\Grafika\Menu"
+
+
         #do zmiany. Sprobuj uzyc generatorow yield etc. Plus później automatyczne dopasowanie do rozdzielczosci
-        self.menu_image = pygame.image.load("../Grafika/Menu/temp_menu.png").convert_alpha()
+        self.menu_image = pygame.image.load(fr"{game_dir}{graphics_dir}\temp_menu.png").convert_alpha()
         self.menu_image = pygame.transform.scale(self.menu_image, (window_width, window_height))
         #load functional buttons and get rect size from them
-        self.sound_image = pygame.image.load("../Grafika/Menu/dzwiek.png").convert_alpha()
+        self.sound_image = pygame.image.load(os.path.abspath(fr"{game_dir}{graphics_dir}\dzwiek.png")).convert_alpha()
 
         #get rectangle object of an image
         self.sound_image_rect = self.sound_image.get_rect()
-        self.fullscreen_image = pygame.image.load("../Grafika/Menu/full.png").convert_alpha()
+        self.fullscreen_image = pygame.image.load(fr"{game_dir}{graphics_dir}\full.png").convert_alpha()
         # get rectangle object of a scaled image
         self.fullscreen_image_rect = self.fullscreen_image.get_rect()
 
         #load button images and get rect size from them
-        self.start_image = pygame.image.load("../Grafika/Menu/start.png").convert_alpha()
+        self.start_image = pygame.image.load(fr"{game_dir}{graphics_dir}\start.png").convert_alpha()
         # get rectangle object of an image
         self.start_image_rect = self.start_image.get_rect()
         self.start_image = pygame.transform.scale(self.start_image, (int(self.start_image_rect.width * scaling_width),
@@ -43,7 +52,7 @@ class Menu():
         # add image with corresponding rectangle object to dictionary
         self.buttons[0][self.start_image] = self.start_image_rect
 
-        self.exit_image = pygame.image.load("../Grafika/Menu/exit.png").convert_alpha()
+        self.exit_image = pygame.image.load(fr"{game_dir}{graphics_dir}\exit.png").convert_alpha()
         # get rectangle object of an image
         self.exit_image_rect = self.exit_image.get_rect()
         self.exit_image = pygame.transform.scale(self.exit_image, (int(self.exit_image_rect.width * scaling_width),
@@ -82,7 +91,15 @@ class Menu():
             for button in button_dict:
                 if self.buttons[i][button].x < click_coordinates[0] < self.buttons[i][button].x + self.buttons[i][button].width:
                     if self.buttons[i][button].y < click_coordinates[1] < self.buttons[i][button].y + self.buttons[i][button].height:
+                        self.clicked_button = i
                         print(f"You have clicked {button} button with number {i}")
+                        self.button_handler()
+
+    def button_handler(self):
+        if self.clicked_button == 1:
+            self.window.run = False
+        elif self.clicked_button == 0:
+            pass
 
 
 
