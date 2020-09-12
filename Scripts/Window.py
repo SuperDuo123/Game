@@ -62,6 +62,15 @@ class Window():
                         pass
                     if event.button == 5: #Scroll Down
                         pass
+                """Activates when keyboard key is released"""
+                if event.type == pygame.KEYUP:
+                    """Escape button for calling in-game Menu"""
+                    if event.key == pygame.K_ESCAPE:
+                        print("ESC Clicked")
+
+                """Activates when keyboard key is pressed"""
+                if event.type == pygame.KEYDOWN:
+                    pass
 
 
 
