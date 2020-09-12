@@ -1,5 +1,5 @@
 import pygame
-from Menu import Menu
+from Scripts.Menu import Menu
 
 
 class Window():

@@ -1,6 +1,8 @@
-from Window import Window
-from settings import *
+from Scripts.Window import Window
+from Scripts.settings import *
 # launch program from this file
+
+
 
 def main():
     app = Window(window_width,window_height,0)
