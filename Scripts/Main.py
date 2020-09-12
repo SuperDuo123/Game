@@ -1,5 +1,5 @@
-from Scripts.Window import Window
-from Scripts.settings import *
+from Window import Window
+from settings import *
 # launch program from this file
 
 

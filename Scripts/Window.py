@@ -1,5 +1,5 @@
 import pygame
-from Scripts.Menu import Menu
+from Menu import Menu
 
 
 class Window():
@@ -47,8 +47,32 @@ class Window():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
-                #if event.type == pygame.MOUSEBUTTONUP:
-                #    print(pygame.mouse.get_pos())
+                if event.type == pygame.MOUSEBUTTONUP:
+                    """Left Mouse Button is associated with id. 1 of event.button. It's in-built function of pygame."""
+                    if event.button == 1: #Left Mouse Button Click
+                        self.menu.button_event_listener(pygame.mouse.get_pos())
+                        print(pygame.mouse.get_pos())
+
+                    if event.button == 2: #Middle Mouse Button Click
+                        pass
+
+                    if event.button == 3: #Right Mouse Button Click
+                        pass
+                    if event.button == 4: #Scroll Up
+                        pass
+                    if event.button == 5: #Scroll Down
+                        pass
+                """Activates when keyboard key is released"""
+                if event.type == pygame.KEYUP:
+                    """Escape button for calling in-game Menu"""
+                    if event.key == pygame.K_ESCAPE:
+                        print("ESC Clicked")
+
+                """Activates when keyboard key is pressed"""
+                if event.type == pygame.KEYDOWN:
+                    pass
+
+
 
             pygame.display.update()
 
