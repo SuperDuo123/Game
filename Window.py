@@ -47,6 +47,8 @@ class Window():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
+                #if event.type == pygame.MOUSEBUTTONUP:
+                #    print(pygame.mouse.get_pos())
 
             pygame.display.update()
 
