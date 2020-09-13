@@ -13,6 +13,7 @@ class Window():
         self.window_width = window_width
         self.window_height = window_height
         self.fullscreen = fullscreen
+        self.sound = sound
         self.window_init()
         # load menu images and render menu background
         self.load_menu()
@@ -21,7 +22,7 @@ class Window():
 
     def load_menu(self):
         #load menu images and render menu background
-        self.menu.load__button_images()
+        self.menu.load_button_images()
         self.menu.load_option_buttons()
         self.menu.render_background()
         self.menu.render_buttons()
@@ -34,9 +35,9 @@ class Window():
         #FULLSCREEN maximizes the window without fitting the resolution
         #pygame.FULLSCREEN fit the resolution as well as maximizing
         if self.fullscreen:
-            self.screen = pygame.display.set_mode((window_width, window_height), pygame.FULLSCREEN)
+            self.screen = pygame.display.set_mode((self.window_width, self.window_height), pygame.FULLSCREEN)
         else:
-            self.screen = pygame.display.set_mode((window_width, window_height))
+            self.screen = pygame.display.set_mode((self.window_width, self.window_height))
 
     def mainloop(self):
 
@@ -45,6 +46,7 @@ class Window():
             #menu background blitting
             self.screen.blit(self.menu.background_surface, (0, 0))
             self.screen.blit(self.menu.buttons_surface, (0, 0))
+
             #event loop
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -74,10 +76,10 @@ class Window():
                 """Activates when keyboard key is pressed"""
                 if event.type == pygame.KEYDOWN:
                     pass
-
-
-
             pygame.display.update()
+
+
+
 
 
 

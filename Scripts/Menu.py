@@ -24,14 +24,14 @@ class Menu():
         print(self.background_surface)
         print(self.buttons_surface)
 
-    def load__button_images(self):
+    def load_button_images(self):
         """Load button images. Start game button, exit button"""
         self.game_dir = os.path.dirname(os.getcwd())
         self.graphics_dir = r"\Grafika\Menu"
 
         # do zmiany. Sprobuj uzyc generatorow yield etc. Plus później automatyczne dopasowanie do rozdzielczosci
         self.menu_image = pygame.image.load(fr"{self.game_dir}{self.graphics_dir}\temp_menu.png").convert_alpha()
-        self.menu_image = pygame.transform.scale(self.menu_image, (window_width, window_height))
+        '''self.menu_image = pygame.transform.scale(self.menu_image, (window_width, window_height))'''
         # load functional buttons and get rect size from them
 
         # load button images and get rect size from them
@@ -58,6 +58,9 @@ class Menu():
 
     def load_option_buttons(self):
         """Load images of option buttons. Fullscreen button and sound button"""
+
+
+
         self.sound_image = pygame.image.load(
             os.path.abspath(fr"{self.game_dir}{self.graphics_dir}\dzwiek.png")).convert_alpha()
         # get rectangle object of an image
@@ -70,6 +73,16 @@ class Menu():
         # add button 0 to dictionary
         self.options[0][self.sound_image] = self.sound_image_rect
 
+        self.not_sound_image = pygame.image.load(
+            os.path.abspath(fr"{self.game_dir}{self.graphics_dir}\not_dzwiek.png")).convert_alpha()
+        self.not_sound_image = pygame.transform.scale(self.not_sound_image,
+                                                      (int(self.sound_image_rect.width * scaling_width),
+                                                       int(
+                                                           self.sound_image_rect.height * scaling_height)))
+
+
+
+
         self.fullscreen_image = pygame.image.load(fr"{self.game_dir}{self.graphics_dir}\full.png").convert_alpha()
         # get rectangle object of scaled image
         self.fullscreen_image_rect = self.fullscreen_image.get_rect()
@@ -80,6 +93,13 @@ class Menu():
         self.fullscreen_image_rect = self.fullscreen_image.get_rect()
         # add button 0 to dictionary
         self.options[1][self.fullscreen_image] = self.fullscreen_image_rect
+
+        self.not_fullscreen_image = pygame.image.load(
+            os.path.abspath(fr"{self.game_dir}{self.graphics_dir}\not_full.png")).convert_alpha()
+        self.not_fullscreen_image = pygame.transform.scale(self.not_fullscreen_image,
+                                                           (int(self.sound_image_rect.width * scaling_width),
+                                                            int(
+                                                                self.sound_image_rect.height * scaling_height)))
 
     def render_background(self):
         # blit background image to background surface
@@ -108,23 +128,30 @@ class Menu():
 
         for i, button_dict in self.options.items():
             for key in button_dict:
-                self.buttons_surface.blit(key, ((window_width - width) - width * n, window_height - height))
+
+                if not self.window.fullscreen and i == 1: #checks for windows attribute and renders images of buttons
+                    self.buttons_surface.blit(self.not_fullscreen_image, ((window_width - width) - width * n, window_height - height))
+                else:
+                    self.buttons_surface.blit(key, ((window_width - width) - width * n, window_height - height))
+
+                if not self.window.sound and i == 0:
+                    self.buttons_surface.blit(self.not_sound_image, ((window_width - width) - width * n, window_height - height))
+
                 self.options[i][key].x = (window_width - width) - width * n
                 self.options[i][key].y = window_height - height
                 n += 1
-                width += self.options[i][key].width / 10
+                width += int(self.options[i][key].width / 10)
 
     def button_event_listener(self, click_coordinates):
         """Event listener"""
+
         """First loop gets number and nested dictionary."""
         for i, button_dict in self.buttons.items():
             """Iterates through individual button and associate it with button id (i). If clicked coordinates equals
             to right coordinates of buttons it prints message with button id and button object"""
             for button in button_dict:
-                if self.buttons[i][button].x < click_coordinates[0] < self.buttons[i][button].x + self.buttons[i][
-                    button].width:
-                    if self.buttons[i][button].y < click_coordinates[1] < self.buttons[i][button].y + self.buttons[i][
-                        button].height:
+                if self.buttons[i][button].x < click_coordinates[0] < self.buttons[i][button].x + self.buttons[i][button].width:
+                    if self.buttons[i][button].y < click_coordinates[1] < self.buttons[i][button].y + self.buttons[i][button].height:
                         self.clicked_button = i
                         print(f"You have clicked {button} button with number {i}")
 
@@ -132,42 +159,55 @@ class Menu():
         to right coordinates of buttons it prints message with button id and button object"""
         for i, button_dict in self.options.items():
             for button in button_dict:
-                if self.options[i][button].x < click_coordinates[0] < self.options[i][button].x + self.options[i][
-                    button].width:
-                    if self.options[i][button].y < click_coordinates[1] < self.options[i][button].y + self.options[i][
-                        button].height:
+                if self.options[i][button].x < click_coordinates[0] < self.options[i][button].x + self.options[i][button].width:
+                    if self.options[i][button].y < click_coordinates[1] < self.options[i][button].y + self.options[i][button].height:
                         self.clicked_option_button = i
                         print(f"You have clicked {button} option button with number {i}")
         self.button_handler() #launch button handler. Function button_handler() below.
 
     def button_handler(self):
         """buttons for start game and exit"""
-        #if there is no value do nothing
-        if self.clicked_button is None:
+
+        if self.clicked_button is None: #if there is no value do nothing
             pass
-        #start game button. You need to add function to make it work
-        elif self.clicked_button == 0:
+
+        elif self.clicked_button == 0: #start game button. You need to add function to make it work
             pass
-        #exit button function. It just changes the mainloop to false.
-        elif self.clicked_button == 1:
+
+        elif self.clicked_button == 1: #exit button function. It just changes the mainloop to false.
             print("Clicked exit button")
             self.window.run = False
 
         """buttons for fullscreen and sound"""
-        #if there is no value, do nothing
-        if self.clicked_option_button is None:
+
+        if self.clicked_option_button is None: #if there is no value, do nothing
             pass
-        #if clicked print clicked sound button. Making in progress
-        elif self.clicked_option_button == 0:
-            print("clicked sound button")
-        #toggle fullscreen or not
-        elif self.clicked_option_button == 1:
+
+        elif self.clicked_option_button == 0: #if clicked print clicked sound button. Making in progress
+            if self.window.sound:
+                self.window.sound = False
+                self.render_buttons()
+            else:
+                self.window.sound = True
+                self.render_buttons()
+
+        elif self.clicked_option_button == 1: #toggle fullscreen or not
+            print(self.options)
             if self.window.fullscreen:
-                self.window.screen = pygame.display.set_mode((window_width, window_height))
+                #print(self.options)
+                self.window.screen = pygame.display.set_mode((self.window.window_width, self.window.window_height))
                 self.window.fullscreen = False
                 self.clicked_option_button = None
+
+                self.render_buttons()
+                self.render_background()
+
             else:
-                self.window.screen = pygame.display.set_mode((window_width, window_height), pygame.FULLSCREEN)
+                self.window.screen = pygame.display.set_mode((self.window.window_width, self.window.window_height), pygame.FULLSCREEN)
                 self.window.fullscreen = True
                 self.clicked_option_button = None
+
+                self.render_buttons()
+                self.render_background()
+
             print("clicked fullscreen mode")
