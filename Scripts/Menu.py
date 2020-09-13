@@ -140,19 +140,26 @@ class Menu():
         self.button_handler()
 
     def button_handler(self):
+        """buttons for start game and exit"""
+        #if there is no value do nothing
         if self.clicked_button is None:
             pass
+        #start game button. You need to add function to make it work
         elif self.clicked_button == 0:
             pass
+        #exit button function. It just changes the mainloop to false.
         elif self.clicked_button == 1:
             print("Clicked exit button")
             self.window.run = False
-        #sound
+
+        """buttons for fullscreen and sound"""
+        #if there is no value, do nothing
         if self.clicked_option_button is None:
             pass
+        #if clicked print clicked sound button. Making in progress
         elif self.clicked_option_button == 0:
             print("clicked sound button")
-        #fullscreen
+        #toggle fullscreen or not
         elif self.clicked_option_button == 1:
             if self.window.fullscreen:
                 self.window.screen = pygame.display.set_mode((window_width, window_height))
