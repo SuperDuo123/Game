@@ -127,8 +127,9 @@ class Menu():
                         button].height:
                         self.clicked_button = i
                         print(f"You have clicked {button} button with number {i}")
-                        #self.button_handler()
 
+        """Iterates through individual button and associate it with button id (i). If clicked coordinates equals
+        to right coordinates of buttons it prints message with button id and button object"""
         for i, button_dict in self.options.items():
             for button in button_dict:
                 if self.options[i][button].x < click_coordinates[0] < self.options[i][button].x + self.options[i][
@@ -137,7 +138,7 @@ class Menu():
                         button].height:
                         self.clicked_option_button = i
                         print(f"You have clicked {button} option button with number {i}")
-        self.button_handler()
+        self.button_handler() #launch button handler. Function button_handler() below.
 
     def button_handler(self):
         """buttons for start game and exit"""
