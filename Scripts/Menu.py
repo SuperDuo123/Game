@@ -12,6 +12,8 @@ class Menu():
 
         self.buttons = {0:{},
                         1:{}}
+        self.options = {0:{},
+                           1:{}}
         self.background_surface = pygame.Surface((window_width, window_height))
         self.buttons_surface = pygame.Surface((window_width, window_height), pygame.SRCALPHA, 32)
         self.clicked_button = None
@@ -23,26 +25,24 @@ class Menu():
         print(self.buttons_surface)
 
 
-    def load_images(self):
-        #print(os.path.("temp_menu.png")
-        game_dir = os.path.dirname(os.getcwd())
-        graphics_dir = r"\Grafika\Menu"
+    def load__button_images(self):
+        """Load button images. Start game button, exit button"""
+        self.game_dir = os.path.dirname(os.getcwd())
+        self.graphics_dir = r"\Grafika\Menu"
 
 
         #do zmiany. Sprobuj uzyc generatorow yield etc. Plus później automatyczne dopasowanie do rozdzielczosci
-        self.menu_image = pygame.image.load(fr"{game_dir}{graphics_dir}\temp_menu.png").convert_alpha()
+        self.menu_image = pygame.image.load(fr"{self.game_dir}{self.graphics_dir}\temp_menu.png").convert_alpha()
         self.menu_image = pygame.transform.scale(self.menu_image, (window_width, window_height))
         #load functional buttons and get rect size from them
-        self.sound_image = pygame.image.load(os.path.abspath(fr"{game_dir}{graphics_dir}\dzwiek.png")).convert_alpha()
 
-        #get rectangle object of an image
-        self.sound_image_rect = self.sound_image.get_rect()
-        self.fullscreen_image = pygame.image.load(fr"{game_dir}{graphics_dir}\full.png").convert_alpha()
-        # get rectangle object of a scaled image
-        self.fullscreen_image_rect = self.fullscreen_image.get_rect()
+
+
+
+
 
         #load button images and get rect size from them
-        self.start_image = pygame.image.load(fr"{game_dir}{graphics_dir}\start.png").convert_alpha()
+        self.start_image = pygame.image.load(fr"{self.game_dir}{self.graphics_dir}\start.png").convert_alpha()
         # get rectangle object of an image
         self.start_image_rect = self.start_image.get_rect()
         self.start_image = pygame.transform.scale(self.start_image, (int(self.start_image_rect.width * scaling_width),
@@ -52,7 +52,7 @@ class Menu():
         # add image with corresponding rectangle object to dictionary
         self.buttons[0][self.start_image] = self.start_image_rect
 
-        self.exit_image = pygame.image.load(fr"{game_dir}{graphics_dir}\exit.png").convert_alpha()
+        self.exit_image = pygame.image.load(fr"{self.game_dir}{self.graphics_dir}\exit.png").convert_alpha()
         # get rectangle object of an image
         self.exit_image_rect = self.exit_image.get_rect()
         self.exit_image = pygame.transform.scale(self.exit_image, (int(self.exit_image_rect.width * scaling_width),
@@ -61,6 +61,32 @@ class Menu():
         self.exit_image_rect = self.exit_image.get_rect()
         # add image with corresponding rectangle object to dictionary
         self.buttons[1][self.exit_image] = self.exit_image_rect
+
+    def load_option_buttons(self):
+        """Load images of option buttons. Fullscreen button and sound button"""
+        self.sound_image = pygame.image.load(os.path.abspath(fr"{self.game_dir}{self.graphics_dir}\dzwiek.png")).convert_alpha()
+        # get rectangle object of an image
+        self.sound_image_rect = self.sound_image.get_rect()
+        self.sound_image = pygame.transform.scale(self.sound_image, (int(self.sound_image_rect.width * scaling_width),
+                                                                     int(self.sound_image_rect.height * scaling_height)))
+        #get rectangle object of scaled image
+        self.sound_image_rect = self.sound_image.get_rect()
+        #add button 0 to dictionary
+        self.options[0][self.sound_image] = self.sound_image_rect
+
+        self.fullscreen_image = pygame.image.load(fr"{self.game_dir}{self.graphics_dir}\full.png").convert_alpha()
+        # get rectangle object of scaled image
+        self.fullscreen_image_rect = self.fullscreen_image.get_rect()
+        self.fullscreen_image = pygame.transform.scale(self.fullscreen_image, (int(self.fullscreen_image_rect.width * scaling_width),
+                                                                               int(self.fullscreen_image_rect.height * scaling_height)))
+        # get rectangle object of scaled image
+        self.fullscreen_image_rect = self.fullscreen_image.get_rect()
+        # add button 0 to dictionary
+        self.options[1][self.fullscreen_image] = self.fullscreen_image_rect
+
+        print(self.options)
+
+
 
     def render_background(self):
         #blit background image to background surface
@@ -81,6 +107,14 @@ class Menu():
                 self.buttons[i][key].x = window_width/2 - width/2
                 self.buttons[i][key].y = height
                 height += self.buttons[i][key].height + window_height / 10
+        """Render option buttons"""
+        height = self.fullscreen_image_rect.height
+        width = self.fullscreen_image_rect.width
+        n = 1
+        for i, button_dict in self.options.items():
+            for key in button_dict:
+                self.buttons_surface.blit(key, ((window_width - width) - width * n, window_height - height))
+                n += 1
 
     def button_event_listener(self, click_coordinates):
         """Event listener"""
