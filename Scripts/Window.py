@@ -34,9 +34,9 @@ class Window():
         #FULLSCREEN maximizes the window without fitting the resolution
         #pygame.FULLSCREEN fit the resolution as well as maximizing
         if self.fullscreen:
-            self.screen = pygame.display.set_mode((self.window_width, self.window_height), pygame.FULLSCREEN)
+            self.screen = pygame.display.set_mode((window_width, window_height), pygame.FULLSCREEN)
         else:
-            self.screen = pygame.display.set_mode((self.window_width, self.window_height))
+            self.screen = pygame.display.set_mode((window_width, window_height))
 
     def mainloop(self):
 
