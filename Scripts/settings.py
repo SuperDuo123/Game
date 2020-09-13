@@ -1,5 +1,6 @@
 window_height = 720
 window_width = 1280
+fullscreen = False
 tile_size=40
 
 scaling_height = round(window_height / 720, 1)
