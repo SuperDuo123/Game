@@ -21,7 +21,8 @@ class Window():
 
     def load_menu(self):
         #load menu images and render menu background
-        self.menu.load_images()
+        self.menu.load__button_images()
+        self.menu.load_option_buttons()
         self.menu.render_background()
         self.menu.render_buttons()
 
