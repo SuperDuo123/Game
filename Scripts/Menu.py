@@ -31,7 +31,7 @@ class Menu():
 
         # do zmiany. Sprobuj uzyc generatorow yield etc. Plus później automatyczne dopasowanie do rozdzielczosci
         self.menu_image = pygame.image.load(fr"{self.game_dir}{self.graphics_dir}\temp_menu.png").convert_alpha()
-        '''self.menu_image = pygame.transform.scale(self.menu_image, (window_width, window_height))'''
+        self.menu_image = pygame.transform.scale(self.menu_image, (window_width, window_height))
         # load functional buttons and get rect size from them
 
         # load button images and get rect size from them
@@ -177,9 +177,9 @@ class Menu():
         elif self.clicked_button == 1: #exit button function. It just changes the mainloop to false.
             print("Clicked exit button")
             self.window.run = False
+            self.clicked_button = None
 
         """buttons for fullscreen and sound"""
-
         if self.clicked_option_button is None: #if there is no value, do nothing
             pass
 
@@ -194,20 +194,23 @@ class Menu():
         elif self.clicked_option_button == 1: #toggle fullscreen or not
             print(self.options)
             if self.window.fullscreen:
-                #print(self.options)
-                self.window.screen = pygame.display.set_mode((self.window.window_width, self.window.window_height))
-                self.window.fullscreen = False
-                self.clicked_option_button = None
+
+                self.window.fullscreen = False #changes window fullscreen value to false
+                self.clicked_option_button = None #resets the last clicked button
 
                 self.render_buttons()
                 self.render_background()
+                self.window.screen = pygame.display.set_mode((self.window.window_width, self.window.window_height)) #changes mode to windowed
 
             else:
-                self.window.screen = pygame.display.set_mode((self.window.window_width, self.window.window_height), pygame.FULLSCREEN)
-                self.window.fullscreen = True
-                self.clicked_option_button = None
+
+                self.window.fullscreen = True #changes window fullscreen value to true
+                self.clicked_option_button = None #resets the last clicked button
 
                 self.render_buttons()
                 self.render_background()
+                self.window.screen = pygame.display.set_mode((self.window.window_width, self.window.window_height),
+                                                             pygame.FULLSCREEN) #changes mode to fullscreen mode
+                print("clicked fullscreen mode")
 
-            print("clicked fullscreen mode")
+
