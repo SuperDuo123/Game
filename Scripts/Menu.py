@@ -26,7 +26,9 @@ class Menu():
 
     def load_button_images(self):
         """Load button images. Start game button, exit button"""
-        self.game_dir = os.path.dirname(os.getcwd())
+        self.game_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+        #self.game_dir = os.getcwd()
+        print(self.game_dir)
         self.graphics_dir = r"\Grafika\Menu"
 
         # do zmiany. Sprobuj uzyc generatorow yield etc. Plus później automatyczne dopasowanie do rozdzielczosci

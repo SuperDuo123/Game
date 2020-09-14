@@ -5,6 +5,7 @@ fullscreen = False
 sound = True
 tile_size=40
 
+
 scaling_height = round(window_height / 720, 1)
 
 scaling_width = round(window_width / 1280, 1)
