@@ -6,7 +6,12 @@ from settings import *
 
 def main():
     app = Window(window_width,window_height,0)
-
+    # window initialization
+    app.window_init()
+    # load menu images and render menu background
+    app.load_menu()
+    # mainloop
+    app.mainloop()
 
 
 if __name__ == "__main__":

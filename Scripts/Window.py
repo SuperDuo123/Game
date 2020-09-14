@@ -9,16 +9,16 @@ class Window():
 
         self.menu = Menu(self) #tosses window class attributes and functions to Menu class
 
-        #window initialization parameters
+        # window initialization parameters
         self.window_width = window_width
         self.window_height = window_height
         self.fullscreen = fullscreen
         self.sound = sound
-        self.window_init()
-        # load menu images and render menu background
-        self.load_menu()
-        # mainloop
-        self.mainloop()
+
+
+
+
+
 
     def load_menu(self):
         #load menu images and render menu background
