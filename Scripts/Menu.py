@@ -1,7 +1,7 @@
 import pygame
 from settings import *
-#from Window import *
 import os
+from Map import Map
 
 
 class Menu():
@@ -174,7 +174,9 @@ class Menu():
             pass
 
         elif self.clicked_button == 0: #start game button. You need to add function to make it work
-            pass
+            print("Clicked start button")
+            self.clicked_button = None
+            self.window.load_map()
 
         elif self.clicked_button == 1: #exit button function. It just changes the mainloop to false.
             print("Clicked exit button")

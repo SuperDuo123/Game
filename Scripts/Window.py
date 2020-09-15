@@ -1,5 +1,6 @@
 import pygame
 from Menu import *
+from Map import *
 
 
 class Window():
@@ -9,27 +10,33 @@ class Window():
 
         self.menu = Menu(self) #tosses window class attributes and functions to Menu class
 
+        # booleans to keep track which surfaces to blit
+        self.blit_menu = False
+        self.blit_map = False
+
         # window initialization parameters
         self.window_width = window_width
         self.window_height = window_height
         self.fullscreen = fullscreen
         self.sound = sound
 
-
-
-
-
-
     def load_menu(self):
         #load menu images and render menu background
+        self.blit_map = False
+        self.blit_menu = True
         self.menu.load_button_images()
         self.menu.load_option_buttons()
         self.menu.render_background()
         self.menu.render_buttons()
+    
+    def load_map(self):
+        # create map instance, load generated map on top on the menu
+        self.blit_menu = False
+        self.blit_map = True
+        self.map = Map(self, 15) #tosses window class attributes and functions to Map class
+        self.map.load_tile_types()
+        self.map.generate()
 
-
-        
-        
 
     def window_init(self):
         #FULLSCREEN maximizes the window without fitting the resolution
@@ -43,9 +50,15 @@ class Window():
 
         self.run = True
         while self.run:
-            #menu background blitting
-            self.screen.blit(self.menu.background_surface, (0, 0))
-            self.screen.blit(self.menu.buttons_surface, (0, 0))
+
+            #managing which surfaces to blit
+            if self.blit_menu == True:
+                #menu background blitting
+                self.screen.blit(self.menu.background_surface, (0, 0))
+                self.screen.blit(self.menu.buttons_surface, (0, 0))
+            if self.blit_map == True:
+                #menu background blitting
+                self.screen.blit(self.map.surface, (0, 0))
 
             #event loop
             for event in pygame.event.get():
