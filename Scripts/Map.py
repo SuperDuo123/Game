@@ -20,6 +20,8 @@ class Map():
         self.tile_array = [[0 for x in range(self.size+2)] for y in range(self.size+2)]
         self.surface = pygame.Surface((tile_size*(self.size+2) , tile_size*(self.size+2)))
         self.tile_types = {}
+        self.map_location_x = 0
+        self.map_location_y = 0
         
     
     def load_tile_types(self):              # loades all tile background images

@@ -56,9 +56,11 @@ class Window():
                 #menu background blitting
                 self.screen.blit(self.menu.background_surface, (0, 0))
                 self.screen.blit(self.menu.buttons_surface, (0, 0))
+
             if self.blit_map == True:
                 #menu background blitting
-                self.screen.blit(self.map.surface, (0, 0))
+                self.screen.fill((0,0,0)) #deletes different surfaces
+                self.screen.blit(self.map.surface, (self.map.map_location_x, self.map.map_location_y))
 
             #event loop
             for event in pygame.event.get():
@@ -67,7 +69,8 @@ class Window():
                 if event.type == pygame.MOUSEBUTTONUP:
                     """Left Mouse Button is associated with id. 1 of event.button. It's in-built function of pygame."""
                     if event.button == 1: #Left Mouse Button Click
-                        self.menu.button_event_listener(pygame.mouse.get_pos())
+                        if self.blit_menu == True:
+                            self.menu.button_event_listener(pygame.mouse.get_pos())
                         #self.menu.button_handler()
                         print(pygame.mouse.get_pos())
 
@@ -85,10 +88,21 @@ class Window():
                     """Escape button for calling in-game Menu"""
                     if event.key == pygame.K_ESCAPE:
                         print("ESC Clicked")
+                        self.run = False
 
                 """Activates when keyboard key is pressed"""
                 if event.type == pygame.KEYDOWN:
-                    pass
+                    if event.key == pygame.K_w:
+                        self.map.map_location_y -= 40
+                    if event.key == pygame.K_s:
+                        self.map.map_location_y += 40
+                    if event.key == pygame.K_a:
+                        self.map.map_location_x -= 40
+                    if event.key == pygame.K_d:
+                        self.map.map_location_x += 40
+
+
+
             pygame.display.update()
 
 
