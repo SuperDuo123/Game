@@ -33,7 +33,7 @@ class Window():
         # create map instance, load generated map on top on the menu
         self.blit_menu = False
         self.blit_map = True
-        self.map = Map(self, 15) #tosses window class attributes and functions to Map class
+        self.map = Map(self, 30) #tosses window class attributes and functions to Map class
         self.map.load_tile_types()
         self.map.generate()
 
@@ -93,13 +93,13 @@ class Window():
                 """Activates when keyboard key is pressed"""
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
-                        self.map.map_location_y -= 40
-                    if event.key == pygame.K_s:
                         self.map.map_location_y += 40
+                    if event.key == pygame.K_s:
+                        self.map.map_location_y -= 40
                     if event.key == pygame.K_a:
-                        self.map.map_location_x -= 40
-                    if event.key == pygame.K_d:
                         self.map.map_location_x += 40
+                    if event.key == pygame.K_d:
+                        self.map.map_location_x -= 40
 
 
 

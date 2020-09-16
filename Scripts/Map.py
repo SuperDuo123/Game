@@ -59,7 +59,7 @@ class Map():
                 self.tile_array[i][j] = Tile(i, j, i*tile_size, j*tile_size, 0, 0, self.grass_image1, False)
         
         # this section generates forests -> mountains -> and then water, in this order
-        # so that forests can be overwritten with mountains etc.
+        # so that forests can be overwritten with mountains etc.                ????????
 
         # WATER
         for k in range (0, random.randint(1, 2)):       # !number of lakes
