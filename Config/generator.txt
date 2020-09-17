@@ -1,0 +1,13 @@
+lake_number_min=2
+lake_number_max=2
+lake_xSize_min=3
+lake_xSize_max=5
+lake_ySize_min=3
+lake_ySize_max=5
+forest_number_min=3
+forest_number_max=3
+forest_xSize_min=3
+forest_xSize_max=5
+forest_ySize_min=3
+forest_ySize_max=5
+mountain_chance=15

@@ -33,7 +33,7 @@ class Window():
         # create map instance, load generated map on top on the menu
         self.blit_menu = False
         self.blit_map = True
-        self.map = Map(self, 30) #tosses window class attributes and functions to Map class
+        self.map = Map(self, 15) #tosses window class attributes and functions to Map class
         self.map.load_tile_types()
         self.map.generate()
 
