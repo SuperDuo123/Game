@@ -49,6 +49,10 @@ class Map():
         self.water_image_up_right = pygame.image.load(fr"{self.game_dir}\Grafika\Krajobraz\Woda\rogplaza2.png").convert_alpha()
         self.water_image_down_left = pygame.image.load(fr"{self.game_dir}\Grafika\Krajobraz\Woda\rogplaza4.png").convert_alpha()
         self.water_image_down_right = pygame.image.load(fr"{self.game_dir}\Grafika\Krajobraz\Woda\rogplaza3.png").convert_alpha()
+        # dragon nests
+        self.dragon_image1 = pygame.image.load(fr"{self.game_dir}\Grafika\Krajobraz\Smocze\smocze1.png").convert_alpha()
+        self.dragon_image2 = pygame.image.load(fr"{self.game_dir}\Grafika\Krajobraz\Smocze\smocze2.png").convert_alpha()
+        self.dragon_image3 = pygame.image.load(fr"{self.game_dir}\Grafika\Krajobraz\Smocze\smocze3.png").convert_alpha()
 
     def generate(self):           # generates map using given tiles and map size
         # setting random seed for generator
@@ -62,10 +66,10 @@ class Map():
         # so that forests can be overwritten with mountains etc.                ????????
         # generating water
         self.generate_water()
-        # generating mountains
-        self.generate_mountains()
-        # generating forests
-        self.generate_forests()
+        # generating dragon nests
+        self.generate_dragon_nests()
+        # generating mountains and forests
+        self.generate_single_chance_terrain()
         # THE REST - BORDER AND GRASS
         self.generate_surface()
         print(self.map_array)
@@ -81,14 +85,11 @@ class Map():
         self.lake_ySize_min = int(re.search(r'\d+', f.readline()).group())-2
         self.lake_ySize_max = int(re.search(r'\d+', f.readline()).group())-2
         # forest info
-        self.forest_number_min = int(re.search(r'\d+', f.readline()).group())
-        self.forest_number_max = int(re.search(r'\d+', f.readline()).group())
-        self.forest_xSize_min = int(re.search(r'\d+', f.readline()).group())          
-        self.forest_xSize_max = int(re.search(r'\d+', f.readline()).group())
-        self.forest_ySize_min = int(re.search(r'\d+', f.readline()).group())
-        self.forest_ySize_max = int(re.search(r'\d+', f.readline()).group())
+        self.forest_chance_min = int(re.search(r'\d+', f.readline()).group())
+        self.forest_chance_max = int(re.search(r'\d+', f.readline()).group())
         #mountain info
-        self.mountain_chance = int(re.search(r'\d+', f.readline()).group())
+        self.mountain_chance_min = int(re.search(r'\d+', f.readline()).group())
+        self.mountain_chance_max = int(re.search(r'\d+', f.readline()).group())
         f.close()
 
     def generate_empty(self):
@@ -106,7 +107,29 @@ class Map():
                     else:
                         self.tile_array[i][j] = Tile(i, j, i*tile_size, j*tile_size, "grass", 0, self.grass_image2, False)
         
-    
+    def generate_dragon_nests(self):
+        is_set=False
+        while is_set!=True:
+            xPos = random.randint(1, self.size)         # random index of tile
+            yPos = random.randint(1, self.size)
+            if self.tile_array[xPos][yPos].is_set==False:
+                self.tile_array[xPos][yPos] = Tile(xPos, yPos, xPos*tile_size, yPos*tile_size, "dragon nest", 0, self.dragon_image1, True)
+                is_set=True
+        is_set=False
+        while is_set!=True:
+            xPos = random.randint(1, self.size)         # random index of tile
+            yPos = random.randint(1, self.size)
+            if self.tile_array[xPos][yPos].is_set==False:
+                self.tile_array[xPos][yPos] = Tile(xPos, yPos, xPos*tile_size, yPos*tile_size, "dragon nest", 0, self.dragon_image2, True)
+                is_set=True
+        is_set=False
+        while is_set!=True:
+            xPos = random.randint(1, self.size)         # random index of tile
+            yPos = random.randint(1, self.size)
+            if self.tile_array[xPos][yPos].is_set==False:
+                self.tile_array[xPos][yPos] = Tile(xPos, yPos, xPos*tile_size, yPos*tile_size, "dragon nest", 0, self.dragon_image3, True)
+                is_set=True
+
     def generate_water(self):
         for k in range (0, random.randint(self.lake_number_min, self.lake_number_max)):       # number of lakes
             xSize = random.randint(self.lake_xSize_min, self.lake_xSize_max)                # number of vertical size of water 
@@ -154,6 +177,7 @@ class Map():
             else:
                 print("Lake nr "+str(k+1)+" couldn't be generated!")
     
+    ### NOT USED ###
     def generate_forests(self):
         for k in range (0, random.randint(self.forest_number_min, self.forest_number_max)):       # number of forests
             xSize = random.randint(self.forest_xSize_min, self.forest_xSize_max)                # number of vertical size of forest 
@@ -174,6 +198,7 @@ class Map():
                         else:
                             self.tile_array[i][j] = Tile(i, j, i*tile_size, j*tile_size, "forest", 0, self.forest_image3, True)
     
+    ### NOT USED ###
     def generate_mountains(self):
         # for each tile there is a chance of it being a mountain
         # mountains can't generate on water
@@ -188,6 +213,32 @@ class Map():
                     else:
                         self.tile_array[i][j] = Tile(i, j, i*tile_size, j*tile_size, "mountain", 0, self.mountain_image2, True)
     
+    def generate_single_chance_terrain(self):
+        forest_chance = random.randint(self.forest_chance_min, self.forest_chance_max)
+        mountain_chance = random.randint(self.mountain_chance_min, self.mountain_chance_max)+forest_chance
+        for i in range(0, self.size+2):               
+            for j in range(0, self.size+2):
+                if self.tile_array[i][j].is_set==False:
+                    chance = random.randint(1, 100)
+                    if chance <= forest_chance:             # forest
+                        self.map_array[i][j] = 'F'
+                        t = random.randint(1, 3)            # selecting random forest tile (there are 3 forest tiles)
+                        if t==1:
+                            self.tile_array[i][j] = Tile(i, j, i*tile_size, j*tile_size, "forest", 0, self.forest_image1, True)
+                        elif t==2:
+                            self.tile_array[i][j] = Tile(i, j, i*tile_size, j*tile_size, "forest", 0, self.forest_image2, True)
+                        else:
+                            self.tile_array[i][j] = Tile(i, j, i*tile_size, j*tile_size, "forest", 0, self.forest_image3, True)
+                    elif chance <= mountain_chance:          # mountain
+                        self.map_array[i][j] = 'M'
+                        t = random.randint(1, 2)            # selecting random forest tile (there are 3 forest tiles)
+                        if t==1:
+                            self.tile_array[i][j] = Tile(i, j, i*tile_size, j*tile_size, "mountain", 0, self.mountain_image1, True)
+                        else:
+                            self.tile_array[i][j] = Tile(i, j, i*tile_size, j*tile_size, "mountain", 0, self.mountain_image2, True)
+                    else:               # remains grass
+                        pass
+
     def generate_surface(self):
         #creates the surface of a whole map using images from all generated tiles in previous functions
         for i in range(0, self.size+2):               
