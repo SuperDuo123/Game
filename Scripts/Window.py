@@ -1,18 +1,22 @@
 import pygame
 from Menu import *
 from Map import *
+from handle_keys import *
+from Unit import *
+from Player import Player
+import numpy
 
 
 class Window():
     def __init__(self, window_width, window_height, fullscreen):
         #initialize pygame, menu classes
         pygame.init()
-
+        self.army = []
         self.menu = Menu(self) #tosses window class attributes and functions to Menu class
-
         # booleans to keep track which surfaces to blit
         self.blit_menu = False
         self.blit_map = False
+        self.create_u = False
 
         # window initialization parameters
         self.window_width = window_width
@@ -28,6 +32,16 @@ class Window():
         self.menu.load_option_buttons()
         self.menu.render_background()
         self.menu.render_buttons()
+
+    def create_unit(self):
+        if self.create_u == True:
+            self.army.append(Elf(self))
+        #print(self.army)
+        
+        self.create_u = False
+
+    
+
     
     def load_map(self):
         # create map instance, load generated map on top on the menu
@@ -36,6 +50,10 @@ class Window():
         self.map = Map(self, 15) #tosses window class attributes and functions to Map class
         self.map.load_tile_types()
         self.map.generate()
+
+    def load_keys(self):
+        self.keyboard_mouse = Handle_keys(self)
+        #self.keyboard_mouse = Handle_keys(self, self.menu)
 
 
     def window_init(self):
@@ -50,7 +68,8 @@ class Window():
 
         self.run = True
         while self.run:
-
+            self.create_unit()
+            
             #managing which surfaces to blit
             if self.blit_menu == True:
                 #menu background blitting
@@ -61,47 +80,21 @@ class Window():
                 #menu background blitting
                 self.screen.fill((0,0,0)) #deletes different surfaces
                 self.screen.blit(self.map.surface, (self.map.map_location_x, self.map.map_location_y))
+                for unit in self.army:
+                    self.screen.blit(unit.render, (unit.x_location, unit.y_location))
+                    if unit.selected == True:
+                        pygame.draw.rect(self.screen, (255, 0, 0), unit.rectangle, 1)
+                        #print("selected")
+                    #print(unit.selected)
+
+            #render army
+                
+                
+
+            
 
             #event loop
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-                if event.type == pygame.MOUSEBUTTONUP:
-                    """Left Mouse Button is associated with id. 1 of event.button. It's in-built function of pygame."""
-                    if event.button == 1: #Left Mouse Button Click
-                        if self.blit_menu == True:
-                            self.menu.button_event_listener(pygame.mouse.get_pos())
-                        #self.menu.button_handler()
-                        print(pygame.mouse.get_pos())
-
-                    if event.button == 2: #Middle Mouse Button Click
-                        pass
-
-                    if event.button == 3: #Right Mouse Button Click
-                        pass
-                    if event.button == 4: #Scroll Up
-                        pass
-                    if event.button == 5: #Scroll Down
-                        pass
-                """Activates when keyboard key is released"""
-                if event.type == pygame.KEYUP:
-                    """Escape button for calling in-game Menu"""
-                    if event.key == pygame.K_ESCAPE:
-                        print("ESC Clicked")
-                        self.run = False
-
-                """Activates when keyboard key is pressed"""
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_w:
-                        self.map.map_location_y += 40
-                    if event.key == pygame.K_s:
-                        self.map.map_location_y -= 40
-                    if event.key == pygame.K_a:
-                        self.map.map_location_x += 40
-                    if event.key == pygame.K_d:
-                        self.map.map_location_x -= 40
-
-
+            self.keyboard_mouse.handle()
 
             pygame.display.update()
 

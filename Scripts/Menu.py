@@ -2,6 +2,8 @@ import pygame
 from settings import *
 import os
 from Map import Map
+from Unit import *
+
 
 
 class Menu():
@@ -179,6 +181,9 @@ class Menu():
             self.window.blit_menu = False
             #self.window.screen.fill((0,0,0))
             self.window.load_map()
+            
+            
+            
 
         elif self.clicked_button == 1: #exit button function. It just changes the mainloop to false.
             print("Clicked exit button")

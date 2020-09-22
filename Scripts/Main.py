@@ -10,6 +10,7 @@ def main():
     app.window_init()
     # load menu images and render menu background
     app.load_menu()
+    app.load_keys()
     # mainloop
     app.mainloop()
 
