@@ -2,6 +2,7 @@ from Window import *
 import pygame
 import random
 import math
+import os
 class Unit:
 
     def __init__(self, window):
@@ -12,8 +13,7 @@ class Unit:
         self.range_of_view = 0
         self.x_location = random.randint(30,400)
         self.y_location = random.randint(30,400)
-        self.selected = False
-        
+        self.selected = False       
         print(f"X = {self.x_location}, Y = {self.y_location}")
 
     def move(self, mouse_coords):
@@ -45,10 +45,12 @@ class Elf(Unit):
         self.attack = 20
         self.armor = 10
         self.speed = 90
+        self.game_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+        self.unit_path = "/Grafika/elf.png"
         self.load_image()
 
     def load_image(self):
-        self.image = pygame.image.load(r"C:\Users\rados\Downloads\Game-master(1)\Game-master\Grafika\elf.png")
+        self.image = pygame.image.load(self.game_dir + self.unit_path)
 
     @property
     def render(self):
