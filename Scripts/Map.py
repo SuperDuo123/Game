@@ -113,6 +113,7 @@ class Map():
             xPos = random.randint(1, self.size)         # random index of tile
             yPos = random.randint(1, self.size)
             if self.tile_array[xPos][yPos].is_set==False:
+                self.map_array[xPos][yPos] = 'D'
                 self.tile_array[xPos][yPos] = Tile(xPos, yPos, xPos*tile_size, yPos*tile_size, "dragon nest", 0, self.dragon_image1, True)
                 is_set=True
         is_set=False
@@ -120,6 +121,7 @@ class Map():
             xPos = random.randint(1, self.size)         # random index of tile
             yPos = random.randint(1, self.size)
             if self.tile_array[xPos][yPos].is_set==False:
+                self.map_array[xPos][yPos] = 'D'
                 self.tile_array[xPos][yPos] = Tile(xPos, yPos, xPos*tile_size, yPos*tile_size, "dragon nest", 0, self.dragon_image2, True)
                 is_set=True
         is_set=False
@@ -127,6 +129,7 @@ class Map():
             xPos = random.randint(1, self.size)         # random index of tile
             yPos = random.randint(1, self.size)
             if self.tile_array[xPos][yPos].is_set==False:
+                self.map_array[xPos][yPos] = 'D'
                 self.tile_array[xPos][yPos] = Tile(xPos, yPos, xPos*tile_size, yPos*tile_size, "dragon nest", 0, self.dragon_image3, True)
                 is_set=True
 

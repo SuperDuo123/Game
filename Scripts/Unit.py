@@ -13,11 +13,11 @@ class Unit:
         self.range_of_view = 0
         self.x_location = random.randint(30,400)
         self.y_location = random.randint(30,400)
-        self.selected = False       
+        self.highlight = False       
         print(f"X = {self.x_location}, Y = {self.y_location}")
 
     def move(self, mouse_coords):
-        if self.selected:
+        if self.highlight:
             if mouse_coords[0] % 40 == 0 and mouse_coords[1] % 40 == 0:
                 self.x_location = mouse_coords[0]
                 self.y_location = mouse_coords[1]
@@ -34,7 +34,7 @@ class Unit:
         pass
 
     def select_unit(self):
-        self.selected = True
+        self.highlight = True
 
 
 

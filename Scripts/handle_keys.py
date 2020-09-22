@@ -4,6 +4,7 @@ from Unit import *
 class Handle_keys:
     def __init__(self, window):
         self.window = window
+        self.select = False
         #self.menu = menu        
         #print("Atrybut handle_keys", self.menu)
     def handle(self):
@@ -24,15 +25,13 @@ class Handle_keys:
                                 if unit.rectangle.x < mouse_coords[0] and unit.rectangle.x + unit.rectangle.width > mouse_coords[0]:
                                     if unit.rectangle.y < mouse_coords[1] and unit.rectangle.y + unit.rectangle.width > mouse_coords[1]:
                                         self.select = True
-                                # else:
-                                #     unit.selected = False
                                 
-                                if unit.selected:
+                                if unit.highlight:
                                     unit.move(mouse_coords)
-                                    unit.selected = False
+                                    unit.highlight = False
 
                                 if self.select == True:
-                                    unit.selected = True
+                                    unit.highlight = True
                                     self.select = False
                             #######################################################################################    
                                 
@@ -43,7 +42,7 @@ class Handle_keys:
                             #unit select
                             #unit move
                         #self.menu.button_handler()
-                        print()
+                        
 
                     if event.button == 2: #Middle Mouse Button Click
                         pass

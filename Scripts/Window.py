@@ -82,7 +82,7 @@ class Window():
                 self.screen.blit(self.map.surface, (self.map.map_location_x, self.map.map_location_y))
                 for unit in self.army:
                     self.screen.blit(unit.render, (unit.x_location, unit.y_location))
-                    if unit.selected == True:
+                    if unit.highlight == True:
                         pygame.draw.rect(self.screen, (255, 0, 0), unit.rectangle, 1)
                         #print("selected")
                     #print(unit.selected)
