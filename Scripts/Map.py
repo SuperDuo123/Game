@@ -7,20 +7,17 @@ import random
 import re
 from pygame import surface, display, rect
 
-map_size_test = 5
-print(map_size_test)
-
 class Map():
 
     def __init__(self, window, map_size):
         self.game_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
         self.size = map_size
         print("Rozmiar mapy: "+str(self.size))
-        self.map_array = np.chararray((self.size+2, self.size+2))                   # +2 because of the map border
-        self.tile_array = [[0 for x in range(self.size+2)] for y in range(self.size+2)]
-        self.surface = pygame.Surface((tile_size*(self.size+2) , tile_size*(self.size+2)))
-        self.tile_types = {}
-        self.map_location_x = 0
+        self.map_array = np.chararray((self.size+2, self.size+2))               # ASCII array, maybe matrix?    # +2 because of the map border
+        self.tile_array = [[0 for x in range(self.size+2)] for y in range(self.size+2)]             # 2D tile array, consists of Tile classes
+        self.surface = pygame.Surface((tile_size*(self.size+2) , tile_size*(self.size+2)))          # visible map surface
+        self.tile_types = {}                # NOT USED - dictiontary for tile types
+        self.map_location_x = 0             # top left corner's coordinates
         self.map_location_y = 0
         
     
@@ -73,6 +70,8 @@ class Map():
         # THE REST - BORDER AND GRASS
         self.generate_surface()
         print(self.map_array)
+        # writing to a text file
+        self.save(self.map_array, "map.txt")
     
     def load_generator_data(self):
         f = open(fr"{self.game_dir}\Config\generator.txt")
@@ -108,6 +107,7 @@ class Map():
                         self.tile_array[i][j] = Tile(i, j, i*tile_size, j*tile_size, "grass", 0, self.grass_image2, False)
         
     def generate_dragon_nests(self):
+        # generates nests, one of each type, loops until it can spawn it
         is_set=False
         while is_set!=True:
             xPos = random.randint(1, self.size)         # random index of tile
@@ -134,6 +134,7 @@ class Map():
                 is_set=True
 
     def generate_water(self):
+        # generates k lakes
         for k in range (0, random.randint(self.lake_number_min, self.lake_number_max)):       # number of lakes
             xSize = random.randint(self.lake_xSize_min, self.lake_xSize_max)                # number of vertical size of water 
             ySize = random.randint(self.lake_ySize_min, self.lake_ySize_max)                # number of horizontal size of water 
@@ -217,8 +218,9 @@ class Map():
                         self.tile_array[i][j] = Tile(i, j, i*tile_size, j*tile_size, "mountain", 0, self.mountain_image2, True)
     
     def generate_single_chance_terrain(self):
-        forest_chance = random.randint(self.forest_chance_min, self.forest_chance_max)
-        mountain_chance = random.randint(self.mountain_chance_min, self.mountain_chance_max)+forest_chance
+        # generates terrain that takes only one tile and has its own spawn % chance
+        forest_chance = random.randint(self.forest_chance_min, self.forest_chance_max)          # random spawn chance from between given values
+        mountain_chance = random.randint(self.mountain_chance_min, self.mountain_chance_max)+forest_chance      # its cumulative
         for i in range(0, self.size+2):               
             for j in range(0, self.size+2):
                 if self.tile_array[i][j].is_set==False:
@@ -247,3 +249,10 @@ class Map():
         for i in range(0, self.size+2):               
             for j in range(0, self.size+2):
                 self.surface.blit(self.tile_array[i][j].image, (self.tile_array[i][j].pos_x, self.tile_array[i][j].pos_y))
+
+    def save(self, array, file_name):
+        map_file = open(fr"{self.game_dir}\Maps\{file_name}", "w+")
+        for i in range(0, self.size+2):               
+            for j in range(0, self.size+2):
+                map_file.write(str(self.map_array[i][j]))
+            map_file.write("\n")

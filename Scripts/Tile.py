@@ -13,6 +13,8 @@ class Tile():
         self.type = tile_type              # etc grass, water, city
         self.coat = tile_coat              # 0 - no coat, 1 - dark fog (unknown terrain), 2 - war fog (???)
         self.image = tile_image            # image of given tile, eg picture of grass, used in Map class to make a map surface
-        self.is_set = tile_set
-    
-    #def load_image(self)
+        self.is_set = tile_set             # if a tile can be overwritten or not
+        if "water" in self.type or "mountain" in self.type:     # checks if you can pass through the tile
+            self.movement = 0
+        else:
+            self.movement = 1
