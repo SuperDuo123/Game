@@ -20,18 +20,17 @@ class Unit:
     def unit_interact(self, mouse_coords, value):
         #print(value)
         if self.rectangle.x < mouse_coords[0] and self.rectangle.x + self.rectangle.width > mouse_coords[0]:
-            if self.rectangle.y < mouse_coords[1] and self.rectangle.y + self.rectangle.width > mouse_coords[1]:
+            if self.rectangle.y < mouse_coords[1] and self.rectangle.y + self.rectangle.height > mouse_coords[1]:
                 print(value)
                 self.selected = True
-                                                         
+
         if self.highlight:
+            #self.attack_unit(value, mouse_coords)
             self.move(mouse_coords)
+            
 
 
-        self.highlight_unit(mouse_coords)                 
-
-
-
+        self.highlight_unit(mouse_coords)          
 
     def highlight_unit(self, mouse_coords):
         if self.selected == True:
@@ -50,8 +49,12 @@ class Unit:
         self.selected = False
 
 
-    def attack_unit(self):
-        pass
+    def attack_unit(self, value):
+        attack_coords = pygame.mouse.get_pos()
+        print(attack_coords)
+        print("Value", value)
+        #if attack_coords
+        print("ATTACK!")
 
     def show_health(self, unit):
         print(unit.hp)

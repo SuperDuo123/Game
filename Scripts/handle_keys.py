@@ -25,28 +25,6 @@ class Handle_keys:
                             for value, unit in enumerate(self.player.army):
                                 unit.unit_interact(mouse_coords, value)
 
-                            # for unit in self.player.army:
-
-                            #     if unit.rectangle.x < mouse_coords[0] and unit.rectangle.x + unit.rectangle.width > mouse_coords[0]:
-                            #         if unit.rectangle.y < mouse_coords[1] and unit.rectangle.y + unit.rectangle.width > mouse_coords[1]:
-                            #             unit.selected = True                                         
-                                    
-                         
-                            #     if unit.highlight:
-                            #         unit.move(mouse_coords)
-                            #         unit.highlight = False
-                            #         unit.selected = False  
-
-                            #     if unit.selected == True:
-                            #         unit.highlight = True
-                            #         #unit.selected = False                                    
-                                
-
-
-
-                            #######################################################################################    
-                        
-
                     if event.button == 2: #Middle Mouse Button Click
                         pass
 
@@ -70,6 +48,11 @@ class Handle_keys:
                     if event.key == pygame.K_h:
                         for unit in self.player.army:
                             unit.show_health(unit)
+
+                    if event.key == pygame.K_u:
+                        for value, unit in enumerate(self.player.army):
+                            if unit.selected:
+                                unit.attack_unit(value)
 
 
 
