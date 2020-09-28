@@ -11,7 +11,9 @@ class Window():
     def __init__(self, window_width, window_height, fullscreen):
         #initialize pygame, menu classes
         pygame.init()
-        self.army = []
+        self.player = Player()
+
+        # self.army = []
         self.menu = Menu(self) #tosses window class attributes and functions to Menu class
         # booleans to keep track which surfaces to blit
         self.blit_menu = False
@@ -35,7 +37,10 @@ class Window():
 
     def create_unit(self):
         if self.create_u == True:
-            self.army.append(Elf(self))
+            # self.army.append(Elf(self))
+            self.player.army.append(Elf(self, self.player))
+            self.player.display_units()
+            
         #print(self.army)
         
         self.create_u = False
@@ -52,7 +57,7 @@ class Window():
         self.map.generate()
 
     def load_keys(self):
-        self.keyboard_mouse = Handle_keys(self)
+        self.keyboard_mouse = Handle_keys(self, self.player)
         #self.keyboard_mouse = Handle_keys(self, self.menu)
 
 
@@ -80,7 +85,7 @@ class Window():
                 #menu background blitting
                 self.screen.fill((0,0,0)) #deletes different surfaces
                 self.screen.blit(self.map.surface, (self.map.map_location_x, self.map.map_location_y))
-                for unit in self.army:
+                for unit in self.player.army:
                     self.screen.blit(unit.render, (unit.x_location, unit.y_location))
                     if unit.highlight == True:
                         pygame.draw.rect(self.screen, (255, 0, 0), unit.rectangle, 1)

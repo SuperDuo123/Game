@@ -2,8 +2,9 @@ import pygame
 from Unit import *
 
 class Handle_keys:
-    def __init__(self, window):
+    def __init__(self, window, player):
         self.window = window
+        self.player = player
         self.select = False
         #self.menu = menu        
         #print("Atrybut handle_keys", self.menu)
@@ -21,27 +22,29 @@ class Handle_keys:
 
                         if self.window.blit_map == True:
                             """moving unit"""
-                            for unit in self.window.army:
-                                if unit.rectangle.x < mouse_coords[0] and unit.rectangle.x + unit.rectangle.width > mouse_coords[0]:
-                                    if unit.rectangle.y < mouse_coords[1] and unit.rectangle.y + unit.rectangle.width > mouse_coords[1]:
-                                        self.select = True
-                                
-                                if unit.highlight:
-                                    unit.move(mouse_coords)
-                                    unit.highlight = False
+                            for unit in self.player.army:
+                                unit.move_unit(mouse_coords)
 
-                                if self.select == True:
-                                    unit.highlight = True
-                                    self.select = False
+                            # for unit in self.player.army:
+
+                            #     if unit.rectangle.x < mouse_coords[0] and unit.rectangle.x + unit.rectangle.width > mouse_coords[0]:
+                            #         if unit.rectangle.y < mouse_coords[1] and unit.rectangle.y + unit.rectangle.width > mouse_coords[1]:
+                            #             unit.selected = True                                         
+                                    
+                         
+                            #     if unit.highlight:
+                            #         unit.move(mouse_coords)
+                            #         unit.highlight = False
+                            #         unit.selected = False  
+
+                            #     if unit.selected == True:
+                            #         unit.highlight = True
+                            #         #unit.selected = False                                    
+                                
+
+
+
                             #######################################################################################    
-                                
-                                
-                                
-
-
-                            #unit select
-                            #unit move
-                        #self.menu.button_handler()
                         
 
                     if event.button == 2: #Middle Mouse Button Click
@@ -65,32 +68,35 @@ class Handle_keys:
                         self.window.create_u = True
 
 
+
                 """Activates when keyboard key is pressed"""
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
                         if self.window.blit_map:
                             self.window.map.map_location_y += 40
-                            for unit in self.window.army:
+                            for unit in self.player.army:
                                 unit.y_location += 40
+                               
                             
 
                     if event.key == pygame.K_s:
                         if self.window.blit_map:
                             self.window.map.map_location_y -= 40
-                            for unit in self.window.army:
+                            for unit in self.player.army:
                                 unit.y_location -= 40
+                              
 
                             
                     if event.key == pygame.K_a:
                         if self.window.blit_map:
                             self.window.map.map_location_x += 40
-                            for unit in self.window.army:
+                            for unit in self.player.army:
                                 unit.x_location += 40
+                               
                             
 
                     if event.key == pygame.K_d:
                         if self.window.blit_map:
                             self.window.map.map_location_x -= 40
-                            for unit in self.window.army:
+                            for unit in self.player.army:
                                 unit.x_location -= 40
-                            

@@ -4,7 +4,7 @@ from settings import *
 
 
 
-def main():
+def main(): 
     app = Window(window_width,window_height,0)
     # window initialization
     app.window_init()
