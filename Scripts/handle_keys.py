@@ -22,8 +22,8 @@ class Handle_keys:
 
                         if self.window.blit_map == True:
                             """moving unit"""
-                            for unit in self.player.army:
-                                unit.move_unit(mouse_coords)
+                            for value, unit in enumerate(self.player.army):
+                                unit.unit_interact(mouse_coords, value)
 
                             # for unit in self.player.army:
 
@@ -66,6 +66,10 @@ class Handle_keys:
                     if event.key == pygame.K_p:
                         print("New unit created")
                         self.window.create_u = True
+
+                    if event.key == pygame.K_h:
+                        for unit in self.player.army:
+                            unit.show_health(unit)
 
 
 
