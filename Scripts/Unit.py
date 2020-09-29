@@ -51,10 +51,12 @@ class Unit:
 
     def attack_unit(self, value):
         attack_coords = pygame.mouse.get_pos()
-        print(attack_coords)
-        print("Value", value)
-        #if attack_coords
-        print("ATTACK!")
+        if self.rectangle.x < attack_coords[0] and self.rectangle.x + self.rectangle.width > attack_coords[0]:
+            if self.rectangle.y < attack_coords[1] and self.rectangle.y + self.rectangle.height > attack_coords[1]:
+                print(attack_coords)
+                print("Value", value)
+                #if attack_coords
+                print("ATTACK!")
 
     def show_health(self, unit):
         print(unit.hp)

@@ -29,11 +29,15 @@ class Handle_keys:
                         pass
 
                     if event.button == 3: #Right Mouse Button Click
-                        pass
+                        for value, unit in enumerate(self.player.army):
+                            # if unit.selected:
+                            unit.attack_unit(value)
+
                     if event.button == 4: #Scroll Up
                         pass
                     if event.button == 5: #Scroll Down
                         pass
+
                 """Activates when keyboard key is released"""
                 if event.type == pygame.KEYUP:
                     """Escape button for calling in-game Menu"""
@@ -49,10 +53,6 @@ class Handle_keys:
                         for unit in self.player.army:
                             unit.show_health(unit)
 
-                    if event.key == pygame.K_u:
-                        for value, unit in enumerate(self.player.army):
-                            if unit.selected:
-                                unit.attack_unit(value)
 
 
 
