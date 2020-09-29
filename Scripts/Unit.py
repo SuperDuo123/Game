@@ -60,7 +60,7 @@ class Unit:
             if self.rectangle.x < attack_coords[0] and self.rectangle.x + self.rectangle.width > attack_coords[0]:
                 if self.rectangle.y < attack_coords[1] and self.rectangle.y + self.rectangle.height > attack_coords[1]:
                     print(attack_coords)
-                    print("Value", attacked_unit_id)
+                    print(f"Unit with id {attacked_unit_id} was attacked")
                     #if attack_coords
                     print("ATTACK!")                    
                     self.player.attacked_unit_id = attacked_unit_id
