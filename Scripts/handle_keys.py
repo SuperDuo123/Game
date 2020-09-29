@@ -22,16 +22,21 @@ class Handle_keys:
 
                         if self.window.blit_map == True:
                             """moving unit"""
-                            for value, unit in enumerate(self.player.army):
-                                unit.unit_interact(mouse_coords, value)
+                            
+                            for chosen_unit_id, unit in enumerate(self.player.army):
+                                unit.unit_interact(mouse_coords, chosen_unit_id)
+
+
 
                     if event.button == 2: #Middle Mouse Button Click
                         pass
 
                     if event.button == 3: #Right Mouse Button Click
-                        for value, unit in enumerate(self.player.army):
+
+                        for attacked_unit_id, unit in enumerate(self.player.army):
                             # if unit.selected:
-                            unit.attack_unit(value)
+                            unit.attack_unit(attacked_unit_id)
+
 
                     if event.button == 4: #Scroll Up
                         pass
@@ -48,10 +53,11 @@ class Handle_keys:
                     if event.key == pygame.K_p:
                         print("New unit created")
                         self.window.create_u = True
-
+                    #Check stats and other unit coordinates
                     if event.key == pygame.K_h:
                         for unit in self.player.army:
                             unit.show_health(unit)
+                        self.player.display_chosen_units()
 
 
 

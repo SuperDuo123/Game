@@ -6,35 +6,37 @@ import os
 from Player import *
 class Unit:
 
-    def __init__(self, window):
-        
+    def __init__(self, window, player):
+        self.player = player
         self.window = window
 
         self.selected = False        
         self.range_of_view = 0
         self.x_location = random.randint(30,400)
         self.y_location = random.randint(30,400)
-        self.highlight = False       
+        self.highlight = False  
+  
         print(f"X = {self.x_location}, Y = {self.y_location}")
 
-    def unit_interact(self, mouse_coords, value):
+    def unit_interact(self, mouse_coords, chosen_unit_id):
         #print(value)
+
         if self.rectangle.x < mouse_coords[0] and self.rectangle.x + self.rectangle.width > mouse_coords[0]:
             if self.rectangle.y < mouse_coords[1] and self.rectangle.y + self.rectangle.height > mouse_coords[1]:
-                print(value)
+                print("You've chosen unit with id: ", chosen_unit_id)
                 self.selected = True
 
         if self.highlight:
             #self.attack_unit(value, mouse_coords)
             self.move(mouse_coords)
-            
+            self.player.chosen_unit_id = None
 
+        self.highlight_unit(mouse_coords, chosen_unit_id)          
 
-        self.highlight_unit(mouse_coords)          
-
-    def highlight_unit(self, mouse_coords):
+    def highlight_unit(self, mouse_coords, chosen_unit_id):
         if self.selected == True:
-            self.highlight = True        
+            self.highlight = True
+            self.player.chosen_unit_id = chosen_unit_id        
 
     def move(self, mouse_coords):
   
@@ -47,19 +49,26 @@ class Unit:
                 self.y_location = int(40 * math.floor(mouse_coords[1]/40))
         self.highlight = False
         self.selected = False
+       
 
 
-    def attack_unit(self, value):
+    def attack_unit(self, attacked_unit_id):
+        
+
         attack_coords = pygame.mouse.get_pos()
-        if self.rectangle.x < attack_coords[0] and self.rectangle.x + self.rectangle.width > attack_coords[0]:
-            if self.rectangle.y < attack_coords[1] and self.rectangle.y + self.rectangle.height > attack_coords[1]:
-                print(attack_coords)
-                print("Value", value)
-                #if attack_coords
-                print("ATTACK!")
+        if self.player.chosen_unit_id != None:
+            if self.rectangle.x < attack_coords[0] and self.rectangle.x + self.rectangle.width > attack_coords[0]:
+                if self.rectangle.y < attack_coords[1] and self.rectangle.y + self.rectangle.height > attack_coords[1]:
+                    print(attack_coords)
+                    print("Value", attacked_unit_id)
+                    #if attack_coords
+                    print("ATTACK!")                    
+                    self.player.attacked_unit_id = attacked_unit_id
+
 
     def show_health(self, unit):
         print(unit.hp)
+
 
         
 
@@ -73,8 +82,8 @@ class Unit:
 
 class Elf(Unit):
     def __init__(self, window, player):
-        super().__init__(self)
-        self.player = player
+        super().__init__(self, player)
+        # self.player = player
         self.hp = 400
         self.attack = random.randint(4,20)
         self.armor = 10
