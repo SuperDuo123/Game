@@ -55,8 +55,8 @@ class Handle_keys:
                         self.window.create_u = True
                     #Check stats and other unit coordinates
                     if event.key == pygame.K_h:
-                        for unit in self.player.army:
-                            unit.show_health(unit)
+                        for unit_id, unit in enumerate(self.player.army):
+                            print(f"HP of unit {unit_id}: {self.player.show_units_hp(unit)}")
                         self.player.display_chosen_units()
 
 

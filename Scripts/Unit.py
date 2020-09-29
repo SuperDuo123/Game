@@ -59,17 +59,14 @@ class Unit:
         if self.player.chosen_unit_id != None:
             if self.rectangle.x < attack_coords[0] and self.rectangle.x + self.rectangle.width > attack_coords[0]:
                 if self.rectangle.y < attack_coords[1] and self.rectangle.y + self.rectangle.height > attack_coords[1]:
-                    print(attack_coords)
+                    #print(attack_coords)
                     print(f"Unit with id {attacked_unit_id} was attacked")
                     #if attack_coords
-                    print("ATTACK!")                    
+                    print("ATTACK!")
+                    self.player.army[attacked_unit_id].hp -= self.player.army[self.player.chosen_unit_id].attack
                     self.player.attacked_unit_id = attacked_unit_id
-
-
-    def show_health(self, unit):
-        print(unit.hp)
-
-
+        self.highlight = False
+        self.selected = False
         
 
     def recruit(self):
